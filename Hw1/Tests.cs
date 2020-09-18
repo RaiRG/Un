@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
@@ -27,6 +27,16 @@ namespace Hw1
         public void Division()
         {
             Assert.AreEqual(5, Calculator.Calculate("/", 10, 2));
+        }
+        [Test]
+        public void Exception()
+        {
+            Assert.Throws(typeof(NotSupportedException), new TestDelegate(ThrowMethod));
+        }
+
+        private void ThrowMethod()
+        {
+            Calculator.Calculate(">", 7, 8);
         }
     }
 }

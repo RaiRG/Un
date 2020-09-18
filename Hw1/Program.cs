@@ -1,5 +1,6 @@
-﻿using System;
+﻿﻿using System;
 using static Hw1.Calculator;
+using static Hw1.UserInteraction;
 
 namespace Hw1
 {
