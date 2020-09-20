@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using static Hw1.Calculator;
 using static Hw1.UserInteraction;
 
@@ -13,7 +13,6 @@ namespace Hw1
             var b = GetNumber();
             var result = Calculate(@operator, a, b);
             Console.WriteLine(result);
-
         }
     }
 }
