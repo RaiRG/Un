@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Root CoveredStatements="21" TotalStatements="32" CoveragePercent="66" ReportType="DetailedXml" DotCoverVersion="2020.2.2">
+<Root CoveredStatements="4" TotalStatements="4" CoveragePercent="100" ReportType="DetailedXml" DotCoverVersion="2020.2.2">
   <FileIndices>
     <File Index="1" Name="C:\Users\Railina\GitHub\Un\Hw1\Calculator.cs" ChecksumAlgorithm="SHA256" Checksum="894260FAE6EAB6BAC594F0C726B79FD7F41F2A7FB3EB38B2D23AD3B89B06502E" />
     <File Index="2" Name="C:\Users\Railina\GitHub\Un\Hw1\Program.cs" ChecksumAlgorithm="SHA256" Checksum="C5BC0941DE3600DE3426EFFF402E3ABD9B3F9D2AFC69DABBFBDACAF2012DADAA" />
@@ -8,8 +8,8 @@
     <File Index="5" Name="C:\Users\Railina\GitHub\Un\Hw1\obj\Debug\netcoreapp3.0\.NETCoreApp,Version=v3.0.AssemblyAttributes.cs" ChecksumAlgorithm="SHA256" Checksum="E11451FD67294D74D89BA236BFAE9E6314D72337597743AF7A053F0D5ACEEFDC" />
     <File Index="6" Name="C:\Users\Railina\GitHub\Un\Hw1\obj\Debug\netcoreapp3.0\Hw1.AssemblyInfo.cs" ChecksumAlgorithm="SHA256" Checksum="F2F12447C9151BF06BB24585762C6834E7CA68608F12ABE6F51F2742B878E724" />
   </FileIndices>
-  <Assembly Name="Hw1" CoveredStatements="21" TotalStatements="32" CoveragePercent="66">
-    <Namespace Name="Hw1" CoveredStatements="21" TotalStatements="32" CoveragePercent="66">
+  <Assembly Name="Hw1" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+    <Namespace Name="Hw1" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
       <Type Name="Calculator" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
         <Method Name="Calculate(System.String,System.Int32,System.Int32):System.Int32" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
           <Statement FileIndex="1" Line="10" Column="9" EndLine="10" EndColumn="10" Covered="True" />
@@ -18,56 +18,9 @@
           <Statement FileIndex="1" Line="20" Column="9" EndLine="20" EndColumn="10" Covered="True" />
         </Method>
       </Type>
-      <Type Name="Program" CoveredStatements="0" TotalStatements="7" CoveragePercent="0">
-        <Method Name="Main(System.String[]):System.Void" CoveredStatements="0" TotalStatements="7" CoveragePercent="0">
-          <Statement FileIndex="2" Line="10" Column="9" EndLine="10" EndColumn="10" Covered="False" />
-          <Statement FileIndex="2" Line="11" Column="13" EndLine="11" EndColumn="33" Covered="False" />
-          <Statement FileIndex="2" Line="12" Column="13" EndLine="12" EndColumn="48" Covered="False" />
-          <Statement FileIndex="2" Line="13" Column="13" EndLine="13" EndColumn="33" Covered="False" />
-          <Statement FileIndex="2" Line="14" Column="13" EndLine="14" EndColumn="53" Covered="False" />
-          <Statement FileIndex="2" Line="15" Column="13" EndLine="15" EndColumn="39" Covered="False" />
-          <Statement FileIndex="2" Line="17" Column="9" EndLine="17" EndColumn="10" Covered="False" />
-        </Method>
-      </Type>
-      <Type Name="Tests" CoveredStatements="17" TotalStatements="18" CoveragePercent="94">
-        <Method Name="Difference():System.Void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
-          <Statement FileIndex="3" Line="23" Column="9" EndLine="23" EndColumn="10" Covered="True" />
-          <Statement FileIndex="3" Line="24" Column="13" EndLine="24" EndColumn="67" Covered="True" />
-          <Statement FileIndex="3" Line="25" Column="9" EndLine="25" EndColumn="10" Covered="True" />
-        </Method>
-        <Method Name="Division():System.Void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
-          <Statement FileIndex="3" Line="28" Column="9" EndLine="28" EndColumn="10" Covered="True" />
-          <Statement FileIndex="3" Line="29" Column="13" EndLine="29" EndColumn="66" Covered="True" />
-          <Statement FileIndex="3" Line="30" Column="9" EndLine="30" EndColumn="10" Covered="True" />
-        </Method>
-        <Method Name="Exception():System.Void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
-          <Statement FileIndex="3" Line="33" Column="9" EndLine="33" EndColumn="10" Covered="True" />
-          <Statement FileIndex="3" Line="34" Column="13" EndLine="34" EndColumn="89" Covered="True" />
-          <Statement FileIndex="3" Line="35" Column="9" EndLine="35" EndColumn="10" Covered="True" />
-        </Method>
-        <Method Name="Multiply():System.Void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
-          <Statement FileIndex="3" Line="18" Column="9" EndLine="18" EndColumn="10" Covered="True" />
-          <Statement FileIndex="3" Line="19" Column="13" EndLine="19" EndColumn="66" Covered="True" />
-          <Statement FileIndex="3" Line="20" Column="9" EndLine="20" EndColumn="10" Covered="True" />
-        </Method>
-        <Method Name="Sum():System.Void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
-          <Statement FileIndex="3" Line="13" Column="9" EndLine="13" EndColumn="10" Covered="True" />
-          <Statement FileIndex="3" Line="14" Column="13" EndLine="14" EndColumn="67" Covered="True" />
-          <Statement FileIndex="3" Line="15" Column="9" EndLine="15" EndColumn="10" Covered="True" />
-        </Method>
-        <Method Name="ThrowMethod():System.Void" CoveredStatements="2" TotalStatements="3" CoveragePercent="67">
-          <Statement FileIndex="3" Line="38" Column="9" EndLine="38" EndColumn="10" Covered="True" />
-          <Statement FileIndex="3" Line="39" Column="13" EndLine="39" EndColumn="45" Covered="True" />
-          <Statement FileIndex="3" Line="40" Column="9" EndLine="40" EndColumn="10" Covered="False" />
-        </Method>
-      </Type>
-      <Type Name="UserInteraction" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
-        <Method Name="GetNumber():System.Int32" CoveredStatements="0" TotalStatements="3" CoveragePercent="0">
-          <Statement FileIndex="4" Line="10" Column="9" EndLine="10" EndColumn="10" Covered="False" />
-          <Statement FileIndex="4" Line="11" Column="13" EndLine="11" EndColumn="91" Covered="False" />
-          <Statement FileIndex="4" Line="12" Column="9" EndLine="12" EndColumn="10" Covered="False" />
-        </Method>
-      </Type>
+      <Type Name="Program" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+      <Type Name="Tests" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+      <Type Name="UserInteraction" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
     </Namespace>
   </Assembly>
 </Root>
