@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Hw1;
 using NUnit.Framework;
 
-namespace Hw1
+namespace Hw1.Tests
 {
     [TestFixture]
-    class Tests
+    public class Tests
     {
         [Test]
         public void Calculate_2Plus50_52Returned()

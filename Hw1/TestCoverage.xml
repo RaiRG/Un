@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SolutionRoot CoveredStatements="20" TotalStatements="20" CoveragePercent="100" ReportType="Xml" DotCoverVersion="2020.2.2">
+  <Project Name="Hw1.Tests" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
+    <Namespace Name="Hw1.Tests" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
+      <Type Name="Tests" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
+        <Method Name="Calculate_100Divided0_DivideByZeroExceptionReturned():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="():void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+        <Method Name="Calculate_10Divided2_5Returned():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Calculate_20Minus16_4Returned():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Calculate_2Plus50_52Returned():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Calculate_2Times8_16Returned():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Calculate_InvalidСharacter_NotSupportedException():void" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+          <AnonymousMethod Name="():void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        </Method>
+      </Type>
+    </Namespace>
+  </Project>
+</SolutionRoot>
