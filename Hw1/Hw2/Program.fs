@@ -1,5 +1,6 @@
-﻿open System
+﻿namespace Hw2
 
+open System
 type MaybeBuilder() =
 
     member this.Bind(x, f) =
@@ -8,20 +9,18 @@ type MaybeBuilder() =
         | Some a -> f a
 
     member this.Return(x) = Some x
-
-let maybe = new MaybeBuilder()
-
-let sum x y = Some(x + y)
-let diff x y = Some(x - y)
-let div x y = if y = 0.0 then None else Some(x / y)
-let multiply x y = Some(x * y)
-
-let calculate operator x y =
-    maybe {
+module Calculator =
+    let maybe = MaybeBuilder()
+    let sum x y = Some(x + y)
+    let sub x y = Some(x - y)
+    let div x y = if y = 0.0 then None else Some(x / y)
+    let multiply x y = Some(x * y)
+    let calculate operator x y =
+        maybe {
         let! result =
             match operator with
             | "+" -> sum x y
-            | "-" -> diff x y
+            | "-" -> sub x y
             | "*" -> multiply x y
             | "/" -> div x y
             | _ -> None
@@ -29,20 +28,19 @@ let calculate operator x y =
         return result
     }
 
-let print (x: float option) =
-    if x = None
-    then Console.WriteLine("Cannot be divided by zero!")
-    else Console.WriteLine(x.Value)
+module CheckAndPrint =
+    let print (x: float option) =
+        if x = None
+        then Console.WriteLine("You have an error in your expression!")
+        else Console.WriteLine(x.Value)
 
-[<EntryPoint>]
-let main argv =
-    let x = Console.ReadLine() |> float
-    let operator = Console.ReadLine()
-    let y = Console.ReadLine() |> float
-    let result = calculate operator x y
-    print result
-    0
-
-
-// return an integer exit code
-// computation expression для обработки ошибок!
+  
+module Main =
+        [<EntryPoint>]
+        let main argv =
+            let x = Console.ReadLine() |> float
+            let operator = Console.ReadLine()
+            let y = Console.ReadLine() |> float
+            let result = Calculator.calculate operator x y
+            CheckAndPrint.print result
+            0

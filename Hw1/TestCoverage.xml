@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<SolutionRoot CoveredStatements="20" TotalStatements="20" CoveragePercent="100" ReportType="Xml" DotCoverVersion="2020.2.2">
+<SolutionRoot CoveredStatements="37" TotalStatements="37" CoveragePercent="100" ReportType="Xml" DotCoverVersion="2020.2.2">
   <Project Name="Hw1.Tests" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
     <Namespace Name="Hw1.Tests" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
       <Type Name="Tests" CoveredStatements="20" TotalStatements="20" CoveragePercent="100">
@@ -15,6 +15,19 @@
           <OwnCoverage CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
           <AnonymousMethod Name="():void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
         </Method>
+      </Type>
+    </Namespace>
+  </Project>
+  <Project Name="Hw2.Tests" CoveredStatements="17" TotalStatements="17" CoveragePercent="100">
+    <Namespace Name="Hw2.Tests" CoveredStatements="17" TotalStatements="17" CoveragePercent="100">
+      <Type Name="TestClass" CoveredStatements="17" TotalStatements="17" CoveragePercent="100">
+        <Constructor Name="TestClass()" CoveredStatements="1" TotalStatements="1" CoveragePercent="100" />
+        <Method Name="Calculate_100Divided0_DivideByZeroNoneReturned():void" CoveredStatements="2" TotalStatements="2" CoveragePercent="100" />
+        <Method Name="Calculate_10Divided2_5Returned():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Calculate_20Minus16_4Returned():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Calculate_2Plus50_52Returned():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Calculate_2Times8_16Returned():void" CoveredStatements="3" TotalStatements="3" CoveragePercent="100" />
+        <Method Name="Calculate_InvalidСharacter_NoneReturned():void" CoveredStatements="2" TotalStatements="2" CoveragePercent="100" />
       </Type>
     </Namespace>
   </Project>
