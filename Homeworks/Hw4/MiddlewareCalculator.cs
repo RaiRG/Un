@@ -16,8 +16,11 @@ namespace Hw4
 
         public async Task InvokeAsync(HttpContext context)
         {
-            _next.Invoke(context);
-            
+            var expression = context.Request.Query["expression"];
+            var result = Calculator.Calc(expression);
+            if (result == "Error")
+                context.Response.StatusCode = 400;
+            await _next.Invoke(context);
         }
         //use calculator!!!
     }

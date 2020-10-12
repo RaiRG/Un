@@ -6,7 +6,7 @@ namespace Hw4
 {
     public class Calculator
     {
-        public static int Calculate(string @operator, int a, int b)
+        public static string Calculate(string @operator, int a, int b)
         {
             var result = @operator switch
             {
@@ -16,7 +16,23 @@ namespace Hw4
                 "/" => b == 0 ? throw new DivideByZeroException() : a / b,
                 _ => throw new NotSupportedException()
             };
-            return result;
+            return result.ToString();
+        }
+
+        private static readonly char[] operators = new char[]
+        {
+            '+', '-', '*', '/'
+        };
+
+        public static string Calc(string str)
+        {
+            if (!str.Contains(operators[0]) && !str.Contains(operators[1]) && !str.Contains(operators[2]) &&
+                !str.Contains(operators[3])) return "Error";
+            var position = str.IndexOfAny(operators);
+            var first = int.Parse(str.Substring(0, position));
+            var second = int.Parse(str.Substring(position));
+            return Calculate(str[position].ToString(), first, second);
+
         }
     }
 }
