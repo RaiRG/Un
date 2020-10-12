@@ -20,8 +20,13 @@ namespace Hw4
             var result = Calculator.Calc(expression);
             if (result == "Error")
                 context.Response.StatusCode = 400;
+            else
+            {
+                Console.WriteLine(result);
+                await context.Response.WriteAsync(result);
+            }
+
             await _next.Invoke(context);
         }
-        //use calculator!!!
     }
 }

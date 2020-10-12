@@ -29,8 +29,9 @@ namespace Hw4
             if (!str.Contains(operators[0]) && !str.Contains(operators[1]) && !str.Contains(operators[2]) &&
                 !str.Contains(operators[3])) return "Error";
             var position = str.IndexOfAny(operators);
-            var first = int.Parse(str.Substring(0, position));
-            var second = int.Parse(str.Substring(position));
+            var fi = str.Substring(0, position);
+            var first = int.Parse(fi);
+            var second = int.Parse(str.Substring(position+1));
             return Calculate(str[position].ToString(), first, second);
 
         }
