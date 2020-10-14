@@ -15,7 +15,7 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Hw3", "Hw3\Hw3.fsproj", "{C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hw4", "Hw4\Hw4.csproj", "{AC4C7BDC-BFBA-476A-AE03-5464BA2473BD}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Hw5", "Hw5\Hw5.fsproj", "{6317FF73-4CC2-4124-BC37-5A3E5613DC99}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Hw5", "Hw5\Hw5.fsproj", "{C4627461-125A-45CC-A085-B2A2D15C3135}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{AC4C7BDC-BFBA-476A-AE03-5464BA2473BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC4C7BDC-BFBA-476A-AE03-5464BA2473BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC4C7BDC-BFBA-476A-AE03-5464BA2473BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6317FF73-4CC2-4124-BC37-5A3E5613DC99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6317FF73-4CC2-4124-BC37-5A3E5613DC99}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6317FF73-4CC2-4124-BC37-5A3E5613DC99}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6317FF73-4CC2-4124-BC37-5A3E5613DC99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4627461-125A-45CC-A085-B2A2D15C3135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4627461-125A-45CC-A085-B2A2D15C3135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4627461-125A-45CC-A085-B2A2D15C3135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4627461-125A-45CC-A085-B2A2D15C3135}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

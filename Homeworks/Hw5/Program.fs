@@ -26,26 +26,19 @@ module Calculator =
              {
                 return 
                     match Convert.ToInt32(response.StatusCode) with
-                    | 404 -> None
-                    | 400 -> None 
-                    | 500 -> None
                     | 200->let stream = response.GetResponseStream()
                            let reader = new StreamReader(stream)
-                           reader.ReadToEnd()|>Some
+                           reader.ReadToEnd()|>Some                 
                     | _ -> None
              }
         
         
-    let GetAnswer (url:string) =
+    let getAnswer (url:string) =
        async {
            let req = HttpWebRequest.Create(url.ToString(), Method = "GET", ContentType = "text/plain")
            let rsp = req.GetResponse() :?> HttpWebResponse       
-           let result = Async.RunSynchronously(check(rsp))
-           let output =
-               match result with
-               |None -> "error"
-               |_ -> result.Value
-           return output
+           let! result = check(rsp)          
+           return result
        }
    
     let calculate operator x y =       
@@ -56,12 +49,17 @@ module Calculator =
                     | "/" -> "%2F"      
                     | _ -> operator
                 let url =   path + x + correctOperator + y                  
-                let! result = GetAnswer url 
+                let! result = getAnswer url 
                 return result
        }        
             
 
-module Main =    
+module Main =
+    let print (result : 'a option) =
+               match result with
+               |None -> Console.WriteLine("None")
+               |_ -> Console.WriteLine(result.Value.ToString)
+    
     [<EntryPoint>]
     let main _ =
         let x = Console.ReadLine()
@@ -69,5 +67,5 @@ module Main =
         let y = Console.ReadLine()      
         
         let result = Async.RunSynchronously(Calculator.calculate operator x y)
-        Console.WriteLine(result);
+        print result
         0
