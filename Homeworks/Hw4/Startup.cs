@@ -31,8 +31,6 @@ namespace Hw4
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseCalculator();
-           // app.Run (async (context) => await context.Response.WriteAsync("Part Run"));
-            
         }
     }
 }

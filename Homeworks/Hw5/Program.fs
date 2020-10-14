@@ -3,7 +3,6 @@ open System
 open System.IO
 open System.Net
 
-
 type AsyncMaybeBuilder() =
     member this.Bind(x, f) =
         async {
@@ -26,17 +25,14 @@ module Calculator =
              {
                 return 
                     match Convert.ToInt32(response.StatusCode) with
-                    | 200->let stream = response.GetResponseStream()
-                           let reader = new StreamReader(stream)
-                           reader.ReadToEnd()|>Some                 
+                    | 200->Some response.Headers.["result"]                  
                     | _ -> None
              }
-        
         
     let getAnswer (url:string) =
        async {
            let req = HttpWebRequest.Create(url.ToString(), Method = "GET", ContentType = "text/plain")
-           let rsp = req.GetResponse() :?> HttpWebResponse       
+           let rsp = req.GetResponse() :?> HttpWebResponse          
            let! result = check(rsp)          
            return result
        }
@@ -65,7 +61,6 @@ module Main =
         let x = Console.ReadLine()
         let operator = Console.ReadLine()
         let y = Console.ReadLine()      
-        
         let result = Async.RunSynchronously(Calculator.calculate operator x y)
         print result
         0
