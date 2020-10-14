@@ -20,6 +20,7 @@ namespace Hw4
                 context.Response.StatusCode = 400;
             else
             {
+                context.Response.StatusCode = 200;
                 context.Response.Headers.Add("result", result);
             }
             await _next(context);
