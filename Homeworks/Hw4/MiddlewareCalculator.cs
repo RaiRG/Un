@@ -7,8 +7,6 @@ namespace Hw4
     public class MiddlewareCalculator
     {
         private readonly RequestDelegate _next;
-        // СДлеать Pattern!! 
-
         public MiddlewareCalculator(RequestDelegate next)
         {
             _next = next;
@@ -22,11 +20,9 @@ namespace Hw4
                 context.Response.StatusCode = 400;
             else
             {
-                Console.WriteLine(result);
-                await context.Response.WriteAsync(result);
+                await context.Response.WriteAsync($"Result: {result}");
             }
-
-            await _next.Invoke(context);
+            await _next(context);
         }
     }
 }
