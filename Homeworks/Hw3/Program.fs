@@ -61,5 +61,12 @@ let createForm (s, mx, my, iter)  =
 
 [<EntryPoint>]
 let main _ =
-    Application.Run(createForm (1.5, my, mx, 40))
+      
+    let temp = new Form() in
+    temp.Width <- 500
+    temp.Height <- 500      
+    temp.MouseWheel.Add(fun args -> scroll (args, temp))
+    temp.KeyDown.Add(fun args -> onKeyDown (args, temp))
+    temp.Paint.Add(fun e -> e.Graphics.DrawImage(createImage (1.5, my, mx, 40) , 0, 0))
+    Application.Run(temp)
     0
