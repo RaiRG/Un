@@ -8,7 +8,6 @@ let scalingFactor s = s * 1.0 / scaling
 let stepOfMovie = 0.1
 let mutable mx = -1.5
 let mutable my = -1.5
-
 let rec isInMandelbrotSet (z, c, iter, count) =
     if (cMin < z) && (z < cMax) && (count < iter)
     then isInMandelbrotSet (((z * z) + c), c, iter, (count + 1))
@@ -28,6 +27,17 @@ let colorize c =
 let scroll (args: MouseEventArgs, form: Form) =
     scaling <- scaling + stepOfMovie * double (args.Delta)
     form.Invalidate()
+
+let onKeyDown (args: KeyEventArgs, form: Form) =    
+    match args.KeyCode with
+    | Keys.Up -> mx <- mx - stepOfMovie
+    | Keys.Down -> mx <- mx + stepOfMovie
+    | Keys.Right -> my <- my + stepOfMovie
+    | Keys.Left -> my <- my - stepOfMovie
+    | _ -> ignore()
+    form.Invalidate()
+
+
     
 let createImage (s, mx, my, iter) =
     let image = new Bitmap(500, 500)
@@ -45,10 +55,11 @@ let createForm (s, mx, my, iter)  =
     temp.Width <- 500
     temp.Height <- 500      
     temp.MouseWheel.Add(fun args -> scroll (args, temp))
+    temp.KeyDown.Add(fun args -> onKeyDown (args, temp))
     temp.Paint.Add(fun e -> e.Graphics.DrawImage(createImage (s, mx, my, iter) , 0, 0))
     temp
 
 [<EntryPoint>]
-let main args =
+let main _ =
     Application.Run(createForm (1.5, my, mx, 40))
     0
