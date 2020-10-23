@@ -54,7 +54,7 @@ module Main =
     let print (result : 'a option) =
                match result with
                |None -> Console.WriteLine("None")
-               |_ -> Console.WriteLine(result.Value.ToString)
+               |_ -> Console.WriteLine(result.Value)
     
     [<EntryPoint>]
     let main _ =
