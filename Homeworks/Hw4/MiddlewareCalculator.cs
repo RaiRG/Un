@@ -22,6 +22,7 @@ namespace Hw4
             {
                 context.Response.StatusCode = 200;
                 context.Response.Headers.Add("result", result);
+                await context.Response.WriteAsync(result);
             }
             await _next(context);
         }
