@@ -36,11 +36,58 @@ module CheckAndPrint =
 
   
 module Main =
+        let maybe = MaybeBuilder()
+        let tryDouble (vall:string) =         
+         maybe {
+         let! newVal = 
+            try
+                Some(Convert.ToDouble(vall))
+            with
+                | :? System.FormatException -> None
+         
+         return newVal                
+         }
+                
+        let getAnswer (vall : float option)=        
+            match vall  with
+            | None -> false
+            | _ -> true
+        
+        let checkVal (x:string) =
+            let y = tryDouble x
+            getAnswer y
+        
+        let checkOper(x:string) =
+            match x with
+            |"+" -> true
+            |"/" -> true
+            |"*" -> true
+            |"-" -> true
+            | _ -> false
+        
+        
         [<EntryPoint>]
         let main argv =
-            let x = Console.ReadLine() |> float
-            let operator = Console.ReadLine()
-            let y = Console.ReadLine() |> float
-            let result = Calculator.calculate operator x y
-            CheckAndPrint.print result
+            Console.WriteLine("Введите выражение:")
+            let x = Console.ReadLine()
+            
+            let checkX = checkVal x
+            match checkX with
+            |false -> Console.WriteLine("Неверный формат!")
+            |true -> let first = x |> float
+            
+                     let operator = Console.ReadLine()
+                     let checkOp = checkOper operator
+                     match checkOp with
+                        |false -> Console.WriteLine("Неверный формат!")
+                        |true -> let y = Console.ReadLine()
+                                 let checkY = checkVal x
+                                 match checkY with
+                                        |false -> Console.WriteLine("Неверный формат!")
+                                        |true-> let second = y |> float
+                                                let result = Calculator.calculate operator first second
+                                                CheckAndPrint.print result
             0
+                        
+            
+           
