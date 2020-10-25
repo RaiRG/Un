@@ -37,51 +37,47 @@ module CheckAndPrint =
   
 module Main =
         let maybe = MaybeBuilder()
-        let tryDouble (vall:string) =         
+        let getNumberIfItNumber (inputString:string) =         
          maybe {
          let! newVal = 
             try
-                Some(Convert.ToDouble(vall))
+                Some(Convert.ToDouble(inputString))
             with
                 | :? System.FormatException -> None
          
          return newVal                
          }
-                
-        let getAnswer (vall : float option)=        
-            match vall  with
+         
+        let isItNumber (inputString:string) =
+            let y = getNumberIfItNumber inputString
+            match y  with
             | None -> false
             | _ -> true
         
-        let checkVal (x:string) =
-            let y = tryDouble x
-            getAnswer y
-        
-        let checkOper(x:string) =
-            match x with
+        let isItOperator(inputString:string) =
+            match inputString with
             |"+" -> true
             |"/" -> true
             |"*" -> true
             |"-" -> true
-            | _ -> false
-        
+            | _ -> false        
         
         [<EntryPoint>]
         let main argv =
             Console.WriteLine("Введите выражение:")
             let x = Console.ReadLine()
             
-            let checkX = checkVal x
+            let checkX = isItNumber x
             match checkX with
             |false -> Console.WriteLine("Неверный формат!")
             |true -> let first = x |> float
             
                      let operator = Console.ReadLine()
-                     let checkOp = checkOper operator
+                     let checkOp = isItOperator operator
                      match checkOp with
                         |false -> Console.WriteLine("Неверный формат!")
                         |true -> let y = Console.ReadLine()
-                                 let checkY = checkVal x
+                                 let checkY = isItNumber x
                                  match checkY with
                                         |false -> Console.WriteLine("Неверный формат!")
                                         |true-> let second = y |> float

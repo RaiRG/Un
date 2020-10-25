@@ -15,11 +15,10 @@ namespace Hw4
         public async Task InvokeAsync(HttpContext context)
         {
             var expression = context.Request.Query["expression"];
-            var result = Calculator.Calc(expression);
+            var result = Calculator.CalculateExpression(expression);
             if (result == "Error")
             {
                 await context.Response.WriteAsync("Invalid data format!");
-                //context.Response.StatusCode = 400;
             }
             else
             {

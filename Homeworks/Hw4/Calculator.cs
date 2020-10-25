@@ -24,13 +24,13 @@ namespace Hw4
             '+', '-', '*', '/'
         };
 
-        public static string Calc(string str)
+        public static string CalculateExpression(string str)
         {
             if (!str.Contains(operators[0]) && !str.Contains(operators[1]) && !str.Contains(operators[2]) &&
                 !str.Contains(operators[3])) return "Error";
             var position = str.IndexOfAny(operators);
-            var haveOtheroper = str.IndexOfAny(operators, position + 1);
-            if (haveOtheroper != -1)
+            var positionOfOtherOperator = str.IndexOfAny(operators, position + 1);
+            if (positionOfOtherOperator != -1)
                 return "Error";
             var fi = str.Substring(0, position);
             double first;
