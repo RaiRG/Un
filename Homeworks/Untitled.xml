@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root CoveredStatements="26" TotalStatements="26" CoveragePercent="100" ReportType="DetailedXml" DotCoverVersion="2020.2.2">
+  <FileIndices>
+    <File Index="1" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1\Calculator.cs" ChecksumAlgorithm="SHA256" Checksum="9DF48E70B2026B3AC4B3DBAB08694CF0DBB40471E99FFBD1958C2A51EA94FFEA" />
+    <File Index="2" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1\Program.cs" ChecksumAlgorithm="SHA256" Checksum="68F5534A0C70D138C0034CC5553029BC8A3732CE29AFEFA59BF71EC78069AF98" />
+    <File Index="3" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1\UserInteraction.cs" ChecksumAlgorithm="SHA256" Checksum="80821F0AAC6753A42880BAE125753A3758607C9DC01043A261303FDAD0E697D1" />
+    <File Index="4" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1\obj\Debug\netcoreapp3.0\.NETCoreApp,Version=v3.0.AssemblyAttributes.cs" ChecksumAlgorithm="SHA256" Checksum="E11451FD67294D74D89BA236BFAE9E6314D72337597743AF7A053F0D5ACEEFDC" />
+    <File Index="5" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1\obj\Debug\netcoreapp3.0\Hw1.AssemblyInfo.cs" ChecksumAlgorithm="SHA256" Checksum="B1020BD0B9ADBF506CFF76AF324A5B0423C1023FE58924AAA01F779CA45B9F98" />
+    <File Index="6" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw2.Tests\Tests.fs" ChecksumAlgorithm="SHA256" Checksum="827C6351CD3825F14598CA90F9DAED5D8F16B885E221FAD08EA7B929A12A94BF" />
+    <File Index="7" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw2\Program.fs" ChecksumAlgorithm="SHA256" Checksum="70471AE3E4503BC11B9762453387D0915517FA3155E9164ACB30CA892F5EFCC6" />
+    <File Index="11" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1.Tests\obj\Debug\netcoreapp3.1\Hw1.Tests.AssemblyInfo.cs" ChecksumAlgorithm="SHA256" Checksum="0ADF611E9FFC8B1E2925A69AC12DB5E6A4FDD4D4E62363492EFFDCBC4FE46D0F" />
+    <File Index="10" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1.Tests\obj\Debug\netcoreapp3.1\.NETCoreApp,Version=v3.1.AssemblyAttributes.cs" ChecksumAlgorithm="SHA256" Checksum="609721B0977B4BB4296F30DB82935147EB4A1C0DD665D90D1CA0787FF0F86F1D" />
+    <File Index="9" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1.Tests\Tests.cs" ChecksumAlgorithm="SHA256" Checksum="5D57AD2CC6D41FD5BAB1B990568251F284FE9AEBD63D64032CAF58FF346631EF" />
+    <File Index="8" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw1.Tests\Program.cs" ChecksumAlgorithm="SHA256" Checksum="AE09C49F32191668579617ABAC9E06F73085FD1CCD65CC1E15B5754C17FCC255" />
+    <File Index="12" Name="C:\Users\Railina\GitHub\Un\Homeworks\Hw3\Program.fs" ChecksumAlgorithm="SHA256" Checksum="4FE3DD1CC39F00DF389B97AF0101E7341F97819A6E4AB91DCC91E8252F6ED2A6" />
+  </FileIndices>
+  <Assembly Name="Hw1" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+    <Namespace Name="Hw1" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+      <Type Name="Calculator" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+        <Method Name="Calculate(System.String,System.Int32,System.Int32):System.Int32" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <Statement FileIndex="1" Line="10" Column="9" EndLine="10" EndColumn="10" Covered="True" />
+          <Statement FileIndex="1" Line="11" Column="13" EndLine="18" EndColumn="15" Covered="True" />
+          <Statement FileIndex="1" Line="19" Column="13" EndLine="19" EndColumn="27" Covered="True" />
+          <Statement FileIndex="1" Line="20" Column="9" EndLine="20" EndColumn="10" Covered="True" />
+        </Method>
+      </Type>
+      <Type Name="Program" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+      <Type Name="UserInteraction" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+    </Namespace>
+  </Assembly>
+  <Assembly Name="Hw2" CoveredStatements="22" TotalStatements="22" CoveragePercent="100">
+    <Namespace Name="&lt;StartupCode$Hw2&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+      <Type Name="$Program" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+        <Method Name=".cctor():System.Void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Statement FileIndex="7" Line="13" Column="5" EndLine="13" EndColumn="31" Covered="True" />
+        </Method>
+      </Type>
+    </Namespace>
+    <Namespace Name="Hw2" CoveredStatements="21" TotalStatements="21" CoveragePercent="100">
+      <Type Name="Calculator" CoveredStatements="15" TotalStatements="15" CoveragePercent="100">
+        <Type Name="calculate@28" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+          <Method Name="Invoke(System.Double):Microsoft.FSharp.Core.FSharpOption&lt;System.Double&gt;" CoveredStatements="2" TotalStatements="2" CoveragePercent="100">
+            <Statement FileIndex="7" Line="20" Column="9" EndLine="26" EndColumn="24" Covered="True" />
+            <Statement FileIndex="7" Line="28" Column="9" EndLine="28" EndColumn="22" Covered="True" />
+          </Method>
+        </Type>
+        <Method Name="calculate(System.String,System.Double,System.Double):Microsoft.FSharp.Core.FSharpOption&lt;System.Double&gt;" CoveredStatements="7" TotalStatements="7" CoveragePercent="100">
+          <Statement FileIndex="7" Line="19" Column="9" EndLine="19" EndColumn="14" Covered="True" />
+          <Statement FileIndex="7" Line="21" Column="13" EndLine="21" EndColumn="32" Covered="True" />
+          <Statement FileIndex="7" Line="22" Column="22" EndLine="22" EndColumn="29" Covered="True" />
+          <Statement FileIndex="7" Line="23" Column="22" EndLine="23" EndColumn="29" Covered="True" />
+          <Statement FileIndex="7" Line="24" Column="22" EndLine="24" EndColumn="34" Covered="True" />
+          <Statement FileIndex="7" Line="25" Column="22" EndLine="25" EndColumn="29" Covered="True" />
+          <Statement FileIndex="7" Line="26" Column="20" EndLine="26" EndColumn="24" Covered="True" />
+        </Method>
+        <Method Name="div(System.Double,System.Double):Microsoft.FSharp.Core.FSharpOption&lt;System.Double&gt;" CoveredStatements="3" TotalStatements="3" CoveragePercent="100">
+          <Statement FileIndex="7" Line="16" Column="19" EndLine="16" EndColumn="34" Covered="True" />
+          <Statement FileIndex="7" Line="16" Column="35" EndLine="16" EndColumn="39" Covered="True" />
+          <Statement FileIndex="7" Line="16" Column="45" EndLine="16" EndColumn="56" Covered="True" />
+        </Method>
+        <Method Name="multiply(System.Double,System.Double):Microsoft.FSharp.Core.FSharpOption&lt;System.Double&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Statement FileIndex="7" Line="17" Column="24" EndLine="17" EndColumn="35" Covered="True" />
+        </Method>
+        <Method Name="sub(System.Double,System.Double):Microsoft.FSharp.Core.FSharpOption&lt;System.Double&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Statement FileIndex="7" Line="15" Column="19" EndLine="15" EndColumn="30" Covered="True" />
+        </Method>
+        <Method Name="sum(System.Double,System.Double):Microsoft.FSharp.Core.FSharpOption&lt;System.Double&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Statement FileIndex="7" Line="14" Column="19" EndLine="14" EndColumn="30" Covered="True" />
+        </Method>
+      </Type>
+      <Type Name="CheckAndPrint" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+      <Type Name="Main" CoveredStatements="0" TotalStatements="0" CoveragePercent="0" />
+      <Type Name="MaybeBuilder" CoveredStatements="6" TotalStatements="6" CoveragePercent="100">
+        <Method Name=".ctor():System.Void" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Statement FileIndex="7" Line="4" Column="6" EndLine="4" EndColumn="18" Covered="True" />
+        </Method>
+        <Method Name="Bind&lt;b,c&gt;(Microsoft.FSharp.Core.FSharpOption&lt;b&gt;,Microsoft.FSharp.Core.FSharpFunc&lt;b,Microsoft.FSharp.Core.FSharpOption&lt;c&gt;&gt;):Microsoft.FSharp.Core.FSharpOption&lt;c&gt;" CoveredStatements="4" TotalStatements="4" CoveragePercent="100">
+          <Statement FileIndex="7" Line="7" Column="9" EndLine="7" EndColumn="21" Covered="True" />
+          <Statement FileIndex="7" Line="8" Column="19" EndLine="8" EndColumn="23" Covered="True" />
+          <Statement FileIndex="7" Line="7" Column="9" EndLine="7" EndColumn="21" Covered="True" />
+          <Statement FileIndex="7" Line="9" Column="21" EndLine="9" EndColumn="24" Covered="True" />
+        </Method>
+        <Method Name="Return&lt;a&gt;(a):Microsoft.FSharp.Core.FSharpOption&lt;a&gt;" CoveredStatements="1" TotalStatements="1" CoveragePercent="100">
+          <Statement FileIndex="7" Line="11" Column="29" EndLine="11" EndColumn="35" Covered="True" />
+        </Method>
+      </Type>
+    </Namespace>
+  </Assembly>
+</Root>
