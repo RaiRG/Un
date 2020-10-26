@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -26,6 +27,7 @@ namespace Hw6
                 {
                     return "Error";
                 }
+
                 // Если элемент не равен строке или числу
                 if (!double.TryParse(expressionArray[index], out number) &&
                     expressionArray[index] != "+" &&
@@ -35,19 +37,49 @@ namespace Hw6
                 {
                     return "Error";
                 }
+
                 // Если предыдущее - число, и следующее - число, аналогично с операторами.
                 // ...
-
             }
+
             // Оказались здесь, если все ок (строка прошла проверку)
             var posfixExpression = infixToPostfix(expressionArray);
-
-            var temporaryStackExpression = new Stack<Expression>();
+            var stack = new Stack<Expression>();
             for (var i = 0; i < posfixExpression.Count; i++)
             {
-                
+                var symbol = posfixExpression[i];
+                // Если это символ...
+                if (symbol != "+" || symbol != "-" || symbol != "*" || symbol != "/")
+                {
+                    Expression operand1 = stack.Pop();
+                    Expression operand2 = stack.Pop();
+                    switch (symbol)
+                    {
+                        case "+":
+                            stack.Push(Expression.Add(operand2, operand1));
+                            break;
+                        case "-":
+                            stack.Push(Expression.Subtract(operand2, operand1));
+                            break;
+                        case "*":
+                            stack.Push(Expression.Multiply(operand2, operand1));
+                            break;
+                        case "/":
+                            stack.Push(Expression.Divide(operand2, operand1));
+                            break;
+                    }
+                }
+                // Иначе это число, которое нужно перевести в константу
+                else
+                {
+                    stack.Push(Expression.Constant(double.Parse(symbol)));
+                }
             }
 
+            Expression result = stack.Pop();
+            Expression<Func<double, double>> function
+                = Expression.Lambda<Func<double, double>> (result);
+            
             var expressionTreeBuilder = new CustomExpressionTreeVisitor();
         }
 
