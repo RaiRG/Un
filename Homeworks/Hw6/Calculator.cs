@@ -13,36 +13,56 @@ namespace Hw6
             '+', '-', '*', '/'
         };
 
-        public static string CalculateExpression(string str)
+        private static bool isUnputStringCorrect(string[] inputExpressionArray)
         {
-            if (!str.Contains(operators[0]) && !str.Contains(operators[1]) && !str.Contains(operators[2]) &&
-                !str.Contains(operators[3])) return "Error";
-            var expressionArray = str.Split(" ");
-            // Следующий цикл проверяет, корректное ли выражение.
-            for (var index = 0; index < expressionArray.Length; index++)
+            var previous = 1;  // 1 - число, 0 - оператор
+            for (var index = 0; index < inputExpressionArray.Length; index++)
             {
-                // Если первый символ - не число
+                // Если первое или последнее значение - не число
                 double number;
-                if (index == 0 && !double.TryParse(expressionArray[index], out number))
+                if ((index == 0 || index == inputExpressionArray.Length -1)
+                    && !double.TryParse(inputExpressionArray[index], out number))
                 {
-                    return "Error";
+                    return false;
                 }
 
                 // Если элемент не равен строке или числу
-                if (!double.TryParse(expressionArray[index], out number) &&
-                    expressionArray[index] != "+" &&
-                    expressionArray[index] != "-" &&
-                    expressionArray[index] != "*" &&
-                    expressionArray[index] != "/")
+                if (!double.TryParse(inputExpressionArray[index], out number) &&
+                    inputExpressionArray[index] != "+" &&
+                    inputExpressionArray[index] != "-" &&
+                    inputExpressionArray[index] != "*" &&
+                    inputExpressionArray[index] != "/")
                 {
-                    return "Error";
+                    return false;
                 }
-
-                // Если предыдущее - число, и следующее - число, аналогично с операторами.
-                // ...
+                // Если и предыдущий элемент - число, и текущий элемент - число
+                if (!double.TryParse(inputExpressionArray[index], out number) && previous == 1)
+                    return false;
+                // Если и предыдущий элемент - опертор, и текущий элемент - оператор
+                if ((inputExpressionArray[index] == "+" ||
+                     inputExpressionArray[index] == "-" ||
+                     inputExpressionArray[index] == "*" ||
+                     inputExpressionArray[index] == "/") && previous == 0)
+                    return false;
+                
+                if (inputExpressionArray[index] == "+" ||
+                    inputExpressionArray[index] == "-" ||
+                    inputExpressionArray[index] == "*" ||
+                    inputExpressionArray[index] == "/")
+                {
+                    previous = 0;
+                }
+                else
+                {
+                    previous = 1;
+                }
             }
-
-            // Оказались здесь, если все ок (строка прошла проверку)
+            return true;
+        }
+        
+        // Создает дерево выражений по введенному математическому выражению.
+        private static Expression<Func<double>> CreateExpressionTree(string[] expressionArray)
+        {
             var posfixExpression = infixToPostfix(expressionArray);
             var stack = new Stack<Expression>();
             for (var i = 0; i < posfixExpression.Count; i++)
@@ -77,10 +97,25 @@ namespace Hw6
             }
 
             Expression result = stack.Pop();
-            Expression<Func<double, double>> function
-                = Expression.Lambda<Func<double, double>> (result);
+            Expression<Func<double>> function
+                = Expression.Lambda<Func<double>> (result);
+            return function;
+        }
+        
+        public static string CalculateExpression(string str)
+        {
+            if (!str.Contains(operators[0]) && !str.Contains(operators[1]) && !str.Contains(operators[2]) &&
+                !str.Contains(operators[3])) return "Error";
+            var expressionArray = str.Split(" ");
+            if (!isUnputStringCorrect(expressionArray))
+                return "Error";
             
-            var expressionTreeBuilder = new CustomExpressionTreeVisitor();
+            // строим дерево выражений...
+            var expressionTree = CreateExpressionTree(expressionArray);
+            var expressionVisitor = new ExpressionTreeVisitor();
+            var result = expressionVisitor.GetAnswer(expressionTree);
+            ////?????????return result.Body.ToString();
+            throw new Exception("Недоделанный метод");
         }
 
         //возвращает приоритет заданного оператора
@@ -96,7 +131,6 @@ namespace Hw6
                 case "/":
                     return 2;
             }
-
             return -1;
         }
 
