@@ -1,23 +1,20 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System.Linq.Expressions;
+using System.Net;
 
 namespace Hw6
 {
-    public class Program
+    class Client
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            Console.WriteLine("Введите выражение:");
+            var input = Console.ReadLine();
+            var result = Calculator.CalculateExpression(input);
+            Console.WriteLine($"Ответ: {result}");
+            Console.ReadKey();
         }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
     }
 }

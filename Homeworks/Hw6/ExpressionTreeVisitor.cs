@@ -1,56 +1,105 @@
-﻿﻿using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
+using System.Net;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Hw6
 {
     public class ExpressionTreeVisitor : ExpressionVisitor
     {
-        public Expression<Func<double>> GetAnswer(Expression<Func<double>> function)
+        private string path = "https://localhost:5001/?expression=";
+        private Expression head;
+        private Dictionary<Expression, Task<double>> BeforeTasks = new Dictionary<Expression, Task<double>>();
+
+        public async Task<double> GetAnswer(Expression<Func<double>> function)
         {
-            var z = Expression.Lambda<Func<double>>(
-                Visit(function.Body) ?? throw new InvalidOperationException(),
-                function.Parameters);
-            return Expression.Lambda<Func<double>>(
-                Visit(function.Body) ?? throw new InvalidOperationException(),
-                function.Parameters);
+            // Прохожу по всему дереву и заполняю словарь с Task. 
+            Visit(function.Body);
+
+            //Запускаю Task
+            var result = await BeforeTasks[head];
+            return result;
         }
 
-       protected override Expression VisitBinary(BinaryExpression binaryExpr)
-       {
-           Expression res;
-           switch (binaryExpr.NodeType)
-           {
-               case ExpressionType.Add:
-                   res = Expression.Add(
-                       Visit(binaryExpr.Left) ?? throw new Exception("Неверный аргумент"),
-                       Visit(binaryExpr.Right) ?? throw new Exception("Неверный аргумент"));
-                   break;
-               case ExpressionType.Subtract:
-                   res = Expression.Subtract(
-                       Visit(binaryExpr.Left) ?? throw new Exception("Неверный аргумент"),
-                       Visit(binaryExpr.Right) ?? throw new Exception("Неверный аргумент"));
-                   break;
-               case ExpressionType.Multiply:
-                   res = Expression.Multiply(
-                       Visit(binaryExpr.Left) ?? throw new Exception("Неверный аргумент"),
-                       Visit(binaryExpr.Right) ?? throw new Exception("Неверный аргумент"));
-                   break;
-               case ExpressionType.Divide:
-                   res = Expression.Divide(
-                       Visit(binaryExpr.Left) ?? throw new Exception("Неверный аргумент"),
-                       Visit(binaryExpr.Right) ?? throw new Exception("Неверный аргумент"));
-                   break;
-               default:
-                   res = Expression.Add(
-                       Visit(binaryExpr.Left) ?? throw new Exception("Неверный аргумент"),
-                       Visit(binaryExpr.Right) ?? throw new Exception("Неверный аргумент"));
-                   break;
-           }
-           return res;
-       }
-        protected override Expression VisitConstant(ConstantExpression _) => _;
+        protected override Expression VisitBinary(BinaryExpression binaryExpr)
+        {
+            head ??= binaryExpr;
+            // Сначала посещаем левую и правую ветку, т.к. только так сможем создать Task.
+            Visit(binaryExpr.Left);
+            Visit(binaryExpr.Right);
+            BeforeTasks.Add(binaryExpr, CreateTask(binaryExpr));
+            return binaryExpr;
+        }
 
-        protected override Expression VisitParameter(ParameterExpression b) => b;
+        protected override Expression VisitConstant(ConstantExpression constantExpression)
+        {
+            BeforeTasks.Add(constantExpression, CreateTask(constantExpression));
+            return constantExpression;
+        }
+
+        private async Task<double> CreateTask(Expression expr)
+        {
+            return await Task.Run(() =>
+            {
+                if (expr is ConstantExpression expression)
+                {
+                    return (double) expression.Value;
+                }
+                
+                var currentBinaryExpression = (BinaryExpression) expr;
+                // Получаем Task с двух веток. 
+                var left = BeforeTasks[currentBinaryExpression.Left];
+                var right = BeforeTasks[currentBinaryExpression.Right];
+
+                // Запускаются обе ветки.
+                Task.WhenAll(left, right);
+                var operat = GetOperatorForURL(expr);
+                var url = path + left.Result + operat + right.Result;
+                var req = HttpWebRequest.Create(url.ToString());
+                var rsp = (HttpWebResponse) req.GetResponse();
+                if (Convert.ToInt32(rsp.StatusCode) != 200)
+                {
+                    throw new Exception("От сервера ошибка");
+                }
+
+                var result = rsp.Headers.GetValues("result")?[0];
+                Console.WriteLine(left.Result + GetOperatorForConsolePrint(expr) + right.Result + "=" +
+                                  result.ToString());
+                if (result != null)
+                {
+                    return double.Parse(result);
+                }
+
+                Console.WriteLine("Ошибка сервера");
+                throw new Exception("От сервера null");
+            });
+        }
+
+        private string GetOperatorForURL(Expression currentBinaryExpression)
+        {
+            return currentBinaryExpression.NodeType switch
+            {
+                ExpressionType.Add => "%2B",
+                ExpressionType.Subtract => "-",
+                ExpressionType.Multiply => "*",
+                ExpressionType.Divide => "%2F",
+                _ => "%2B"
+            };
+        }
+
+        private string GetOperatorForConsolePrint(Expression currentBinaryExpression)
+        {
+            return currentBinaryExpression.NodeType switch
+            {
+                ExpressionType.Add => "+",
+                ExpressionType.Subtract => "-",
+                ExpressionType.Multiply => "*",
+                ExpressionType.Divide => "/",
+                _ => "+"
+            };
+        }
     }
 }
