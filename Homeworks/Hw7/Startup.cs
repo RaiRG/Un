@@ -26,8 +26,6 @@ namespace Hw7
             // Регистрация сервиса. 
             services.AddRazorPages();
             services.AddScoped<ICalculator, Calculator>();
-            //здесь пишется то, какой интерфей соответуствует какому классу
-            // просто с помощью addscoped
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
