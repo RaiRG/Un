@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Hw8
@@ -12,13 +11,18 @@ namespace Hw8
     {
         static void Main(string[] args)
         {
-            IServiceCollection sc = new ServiceCollection(); 
-            sc.AddScoped<ICalculator, Calculator>();
+            IServiceCollection services = new ServiceCollection();
+            services.AddScoped<ICalculator, Calculator>();
+            services.AddScoped<IExpressionTree, ExpressionTree>();
+            services.AddScoped<ITaskCreator, TaskCreatorWithRequest>();
+            services.AddScoped<IGetCalculatedAnswer, ExpressionTreeVisitor>();
             
-            var sp = sc.BuildServiceProvider();
+            var provider = services.BuildServiceProvider();
+            var calculator = provider.GetService<ICalculator>();
+            
             Console.WriteLine("Введите выражение:");
             var input = Console.ReadLine();
-            var result = Calculator.CalculateExpression(input);
+            var result = calculator.CalculateExpression(input);
             Console.WriteLine($"Ответ: {result}");
             Console.ReadKey();
         }

@@ -7,19 +7,17 @@ namespace Hw7
     public class MiddlewareCalculator
     {
         private readonly RequestDelegate _next;
-        private readonly ICalculator _calc;
         
         public MiddlewareCalculator(RequestDelegate next, ICalculator calculator)
         {
             _next = next;
-            _calc = calculator;
         }
 
         // Кальялкутор для middlaware - зависимость.
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, ICalculator calculator)
         {
             var expression = context.Request.Query["expression"];
-            var result = _calc.CalculateExpression(expression);
+            var result = calculator.CalculateExpression(expression);
             
             if (result == "Error")
             {

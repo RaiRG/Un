@@ -4,10 +4,10 @@ using System.Linq.Expressions;
 
 namespace Hw8
 {
-    public class ExpressionTree
+    public class ExpressionTree : IExpressionTree
     {
         // Создает дерево выражений по введенному математическому выражению.
-        public static Expression<Func<double>> CreateExpressionTree(string[] expressionArray)
+        public Expression<Func<double>> CreateExpressionTree(string[] expressionArray)
         {
             var posfixExpression = infixToPostfix(expressionArray);
             var stack = new Stack<Expression>();

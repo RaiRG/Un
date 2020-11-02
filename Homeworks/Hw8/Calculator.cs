@@ -9,6 +9,15 @@ namespace Hw8
 {
     public class Calculator : ICalculator
     {
+        private IExpressionTree tree;
+        private IGetCalculatedAnswer getterCalculatedAnswer;
+        
+        public Calculator(IExpressionTree _tree, IGetCalculatedAnswer _getCalculatedAnswer)
+        {
+            tree = _tree;
+            getterCalculatedAnswer = _getCalculatedAnswer;
+        }
+        
         public string CalculateExpression(string inputString)
         {
             // Проверяем, есть ли операторы в введенном выражении
@@ -18,9 +27,9 @@ namespace Hw8
             var inputStringAsArray = inputString.Split(" ");
             if (!isInputStringCorrect(inputStringAsArray))
                 return "Неверный формат!";
-            var expressionTree = ExpressionTree.CreateExpressionTree(inputStringAsArray);
-            var expressionVisitor = new ExpressionTreeVisitor();
-            var result = expressionVisitor.GetAnswer(expressionTree);
+            
+            var expression = tree.CreateExpressionTree(inputStringAsArray);
+            var result = getterCalculatedAnswer.GetAnswer(expression);
             return result.Result.ToString();
         }
 
