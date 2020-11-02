@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Net;
 using System.Threading.Tasks;
+using Hw7;
 
 namespace Hw8
 {
-    public class TaskCreatorWithRequest : ITaskCreator
+    public class TaskCreatorWithoutRequest : ITaskCreator
     {
         private string path = "https://localhost:5001/?expression=";
-        private bool isChangeOperator;
+
         public async Task<double> CreateTask(Expression expr, Dictionary<Expression, Task<double>> BeforeTasks)
         {
             return await Task.Run(() =>
@@ -26,22 +27,14 @@ namespace Hw8
 
                 // Запускаются обе ветки.
                 Task.WhenAll(left, right);
-               
-                if (left.Result < 0) 
-                    isChangeOperator = true;
-                else if (right.Result < 0)
-                    isChangeOperator = true;
-                var operat = GetOperatorForURL(expr);
-                var url = path + left.Result + operat + right.Result;
-                var req = HttpWebRequest.Create(url.ToString());
-                var rsp = (HttpWebResponse) req.GetResponse();
-                if (Convert.ToInt32(rsp.StatusCode) != 200)
-                {
-                    throw new Exception("От сервера ошибка");
-                }
+                var operat = GetOperatorForConsolePrint(expr);
 
-                var result = rsp.Headers.GetValues("result")?[0];
-                if (result != null)
+                var operand1 = left.Result.ToString();
+                var operand2 = right.Result.ToString();
+                
+                var calculator = new Hw7.Calculator();
+                var result = calculator.CalculateExpression(operand1 + " " + operat + " " + operand2);
+                if (result != "Error")
                 {
                     Console.WriteLine(left.Result + GetOperatorForConsolePrint(expr) + right.Result + "=" +
                                       result.ToString());
@@ -53,18 +46,7 @@ namespace Hw8
             });
         }
 
-        private string GetOperatorForURL(Expression currentBinaryExpression)
-        {
-            return currentBinaryExpression.NodeType switch
-            {
-                ExpressionType.Add => "%2B",
-                ExpressionType.Subtract => "-",
-                ExpressionType.Multiply => "*",
-                ExpressionType.Divide => "%2F",
-                _ => "%2B"
-            };
-        }
-
+      
         private string GetOperatorForConsolePrint(Expression currentBinaryExpression)
         {
             return currentBinaryExpression.NodeType switch
@@ -78,3 +60,4 @@ namespace Hw8
         }
     }
 }
+

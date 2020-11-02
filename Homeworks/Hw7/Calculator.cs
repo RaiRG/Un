@@ -10,13 +10,13 @@ namespace Hw7
         {
             var result = @operator switch
             {
-                "+" => a + b,
-                "-" => a - b,
-                "*" => a * b,
-                "/" => b == 0 ? throw new DivideByZeroException() : a / b,
+                "+" => (a + b).ToString(),
+                "-" => (a - b).ToString(),
+                "*" => (a * b).ToString(),
+                "/" => b == 0 ? "Error" : (a / b).ToString(),
                 _ => throw new NotSupportedException()
             };
-            return result.ToString();
+            return result;
         }
 
         private static readonly char[] operators = new char[]
