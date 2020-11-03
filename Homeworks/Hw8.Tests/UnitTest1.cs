@@ -22,6 +22,8 @@ namespace Hw8.Tests
         [InlineData("5 + ( 9 / 12 + 3 )")]
         [InlineData("14 - 16 / 2")]
         [InlineData("( 1 + ( 2 * ( 3 + 5 ) / 19 ) )")]
+        [InlineData("1 - ( 2 * ( 3 - 5 ) / 19 ) ")]
+        [InlineData("1 - ( 3 - 4 ) * ( 5 / 19 ) - 16 + 900 - 4")]
         
         
         public void Test1(string inputExpression)
@@ -38,9 +40,10 @@ namespace Hw8.Tests
             var expressionTreeBuilder = provider.GetService<IExpressionTree>();
             
             var expression = expressionTreeBuilder.CreateExpressionTree(inputExpression.Split(" "));
-            
-            var actual = calculator.CalculateExpression(inputExpression);
+           
             var expected = expression.Compile()();
+            var actual = calculator.CalculateExpression(inputExpression);
+           
             Assert.Equal(actual, expected.ToString());
         }
     }

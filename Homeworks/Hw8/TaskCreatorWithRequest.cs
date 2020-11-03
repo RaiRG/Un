@@ -9,7 +9,7 @@ namespace Hw8
     public class TaskCreatorWithRequest : ITaskCreator
     {
         private string path = "https://localhost:5001/?expression=";
-        private bool isChangeOperator;
+       
         public async Task<double> CreateTask(Expression expr, Dictionary<Expression, Task<double>> BeforeTasks)
         {
             return await Task.Run(() =>
@@ -27,12 +27,21 @@ namespace Hw8
                 // Запускаются обе ветки.
                 Task.WhenAll(left, right);
                
-                if (left.Result < 0) 
-                    isChangeOperator = true;
-                else if (right.Result < 0)
-                    isChangeOperator = true;
                 var operat = GetOperatorForURL(expr);
-                var url = path + left.Result + operat + right.Result;
+                var leftOperand = left.Result;
+                var rightOperand = right.Result;
+                if (!isPositiveNumber(left.Result))
+                {
+                    operat = changheOperat(operat);
+                    leftOperand = -1 * left.Result;
+                }
+
+                if (!isPositiveNumber(right.Result))
+                {
+                    operat = changheOperat(operat);
+                    rightOperand = -1 * right.Result;
+                }
+                var url = path + leftOperand + operat + rightOperand;
                 var req = HttpWebRequest.Create(url.ToString());
                 var rsp = (HttpWebResponse) req.GetResponse();
                 if (Convert.ToInt32(rsp.StatusCode) != 200)
@@ -53,6 +62,23 @@ namespace Hw8
             });
         }
 
+        private string changheOperat(string operat)
+        {
+            switch (operat)
+            {
+                case "%2B":
+                    return "-";
+                case "-":
+                    return "%2B";
+                default:
+                    return operat;
+            }
+        }
+
+        private bool isPositiveNumber(double number)
+        {
+            return number >= 0;
+        }
         private string GetOperatorForURL(Expression currentBinaryExpression)
         {
             return currentBinaryExpression.NodeType switch

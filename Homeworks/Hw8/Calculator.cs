@@ -40,6 +40,7 @@ namespace Hw8
 
         private static bool isInputStringCorrect(string[] inputExpressionArray)
         {
+            inputExpressionArray = inputExpressionArray.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
             var previous = -1; // 1 - число, 0 - оператор
             for (var index = 0; index < inputExpressionArray.Length; index++)
             {

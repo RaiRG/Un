@@ -14,13 +14,14 @@ namespace Hw8
             for (var i = 0; i < posfixExpression.Count; i++)
             {
                 var symbol = posfixExpression[i];
+                if (symbol == "")
+                    continue;
                 // Если это число, переводим в константу и пушим
                 if (symbol != "+" && symbol != "-" && symbol != "*" && symbol != "/")
                 {
                     stack.Push(Expression.Constant(double.Parse(symbol)));
-
                 }
-                // Иначе строим ветвть(?) дерева
+                // Иначе строим ветвть() дерева
                 else
                 {
                     Expression operand1 = stack.Pop();

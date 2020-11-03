@@ -28,12 +28,13 @@ namespace Hw8
                 // Запускаются обе ветки.
                 Task.WhenAll(left, right);
                 var operat = GetOperatorForConsolePrint(expr);
-
-                var operand1 = left.Result.ToString();
-                var operand2 = right.Result.ToString();
+                
+                var leftOperand = left.Result;
+                var rightOperand = right.Result;
                 
                 var calculator = new Hw7.Calculator();
-                var result = calculator.CalculateExpression(operand1 + " " + operat + " " + operand2);
+                var result = calculator.Calculate(operat, leftOperand, rightOperand);
+               
                 if (result != "Error")
                 {
                     Console.WriteLine(left.Result + GetOperatorForConsolePrint(expr) + right.Result + "=" +
@@ -46,7 +47,23 @@ namespace Hw8
             });
         }
 
-      
+        private string changheOperat(string operat)
+        {
+            switch (operat)
+            {
+                case "+":
+                    return "-";
+                case "-":
+                    return "+";
+                default:
+                    return operat;
+            }
+        }
+
+        private bool isPositiveNumber(double number)
+        {
+            return number >= 0;
+        }
         private string GetOperatorForConsolePrint(Expression currentBinaryExpression)
         {
             return currentBinaryExpression.NodeType switch

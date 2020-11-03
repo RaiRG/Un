@@ -6,7 +6,7 @@ namespace Hw7
 {
     public class Calculator : ICalculator
     {
-        private static string Calculate(string @operator, double a, double b)
+        public string Calculate(string @operator, double a, double b)
         {
             var result = @operator switch
             {
