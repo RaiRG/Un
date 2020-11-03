@@ -30,17 +30,6 @@ namespace Hw8
                 var operat = GetOperatorForURL(expr);
                 var leftOperand = left.Result;
                 var rightOperand = right.Result;
-                if (!isPositiveNumber(left.Result))
-                {
-                    operat = changheOperat(operat);
-                    leftOperand = -1 * left.Result;
-                }
-
-                if (!isPositiveNumber(right.Result))
-                {
-                    operat = changheOperat(operat);
-                    rightOperand = -1 * right.Result;
-                }
                 var url = path + leftOperand + operat + rightOperand;
                 var req = HttpWebRequest.Create(url.ToString());
                 var rsp = (HttpWebResponse) req.GetResponse();
@@ -60,24 +49,6 @@ namespace Hw8
                 Console.WriteLine("Ошибка сервера");
                 throw new Exception("Invalid data format!");
             });
-        }
-
-        private string changheOperat(string operat)
-        {
-            switch (operat)
-            {
-                case "%2B":
-                    return "-";
-                case "-":
-                    return "%2B";
-                default:
-                    return operat;
-            }
-        }
-
-        private bool isPositiveNumber(double number)
-        {
-            return number >= 0;
         }
         private string GetOperatorForURL(Expression currentBinaryExpression)
         {
