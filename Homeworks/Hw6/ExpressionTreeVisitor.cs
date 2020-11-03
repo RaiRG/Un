@@ -48,7 +48,7 @@ namespace Hw6
                 {
                     return (double) expression.Value;
                 }
-                
+
                 var currentBinaryExpression = (BinaryExpression) expr;
                 // Получаем Task с двух веток. 
                 var left = BeforeTasks[currentBinaryExpression.Left];
@@ -57,7 +57,21 @@ namespace Hw6
                 // Запускаются обе ветки.
                 Task.WhenAll(left, right);
                 var operat = GetOperatorForURL(expr);
-                var url = path + left.Result + operat + right.Result;
+                var leftOperand = left.Result;
+                var rightOperand = right.Result;
+                if (!isPositiveNumber(left.Result))
+                {
+                    operat = changheOperat(operat);
+                    leftOperand = -1 * left.Result;
+                }
+
+                if (!isPositiveNumber(right.Result))
+                {
+                    operat = changheOperat(operat);
+                    rightOperand = -1 * right.Result;
+                }
+
+                var url = path + leftOperand + operat + rightOperand;
                 var req = HttpWebRequest.Create(url.ToString());
                 var rsp = (HttpWebResponse) req.GetResponse();
                 if (Convert.ToInt32(rsp.StatusCode) != 200)
@@ -76,6 +90,24 @@ namespace Hw6
                 Console.WriteLine("Ошибка сервера");
                 throw new Exception("От сервера null");
             });
+        }
+
+        private string changheOperat(string operat)
+        {
+            switch (operat)
+            {
+                case "%2B":
+                    return "-";
+                case "-":
+                    return "%2B";
+                default:
+                    return operat;
+            }
+        }
+
+        private bool isPositiveNumber(double number)
+        {
+            return number >= 0;
         }
 
         private string GetOperatorForURL(Expression currentBinaryExpression)
