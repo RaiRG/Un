@@ -94,8 +94,8 @@ module Main =
     [<EntryPoint>]
     let main _ =
         
-        let serviceCalculating calculate operator x y  =
-                Async.RunSynchronously(calculate operator x y)
+        let serviceCalculating operator x y  =
+                Async.RunSynchronously(Calculator.calculate operator x y)
         
         Console.WriteLine("Введите выражение:")
         let x = Console.ReadLine()
@@ -111,6 +111,6 @@ module Main =
                                  match checkY with
                                         |false -> Console.WriteLine("Неверный формат!")
                                         |true -> let z = Convert.ToDouble(x)
-                                                 let result = serviceCalculating Calculator.calculate operator x y
+                                                 let result = serviceCalculating operator x y
                                                  print result
         0
