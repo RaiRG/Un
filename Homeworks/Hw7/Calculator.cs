@@ -28,10 +28,7 @@ namespace Hw7
         {
             if (!str.Contains(operators[0]) && !str.Contains(operators[1]) && !str.Contains(operators[2]) &&
                 !str.Contains(operators[3])) return "Error";
-            var position = str.IndexOfAny(operators);
-            var positionOfOtherOperator = str.IndexOfAny(operators, position + 1);
-            if (positionOfOtherOperator != -1)
-                return "Error";
+            var position = str.IndexOfAny(operators, 1);
             var fi = str.Substring(0, position);
             double first;
             var isCorrectFirst = double.TryParse(fi, out first);
