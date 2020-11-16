@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Policy;
@@ -10,112 +11,137 @@ using SQLitePCL;
 
 namespace Hw9.EditorFor
 {
-    public class Node
+    public static class MyClass
     {
-        public PropertyInfo current;
-        public List<Type> previous;
-
-        public Node(PropertyInfo property)
+        public static IHtmlContent MyEditorForModel(this IHtmlHelper helper, object model)
         {
-            current = property;
-            previous = new List<Type>();
+            var content = new HtmlContentBuilder();
+            foreach (var str in GetForm(model))
+            {
+                content.AppendHtml(str);
+            }
+
+            return content;
+        }
+
+        public static IHtmlContent MyEditorForProperty(this IHtmlHelper helper, object obj)
+        {
+            var content = new HtmlContentBuilder();
+            foreach (var str in Process(new PropertyNode(obj)))
+            {
+                content.AppendHtml(str);
+            }
+
+            return content;
+        }
+
+        private static readonly Dictionary<Type, string> InputTypes = new Dictionary<Type, string>
+        {
+            {typeof(int), "number"},
+            {typeof(long), "number"},
+            {typeof(bool), "checkbox"},
+            {typeof(string), "text"}
+        };
+
+        public static IEnumerable<string> GetForm(object obj)
+        {
+            var root = new PropertyNode(obj);
+            foreach (var str in root
+                .Type
+                .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                .SelectMany(p => Process(new PropertyNode(p.GetValue(obj), p, root))))
+                yield return str;
+        }
+
+        private static IEnumerable<string> Process(PropertyNode node)
+        {
+            yield return $"<div class='editor-label'><label for='{node.Name}'>{node.Name}</label></div>";
+            if (InputTypes.Keys.Contains(node.Type))
+            {
+                yield return GetInput(node);
+            }
+            else if (node.Type.IsEnum)
+            {
+                yield return GetSelect(node);
+            }
+            else if (node.Type.IsClass)
+            {
+                node.Parent.CheckType(node.Type);
+                foreach (var str in node
+                    .Type
+                    .GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                    .SelectMany(p => Process(new PropertyNode(p.GetValue(node.Value), p, node))))
+                    yield return str;
+            }
+            else
+            {
+                throw new NotSupportedException("Модель содержит неподдерживаемые свойства");
+            }
+        }
+
+        private static string GetInput(PropertyNode node)
+        {
+            return $"<div class='editor-field'>" +
+                   $"<input " +
+                   $"type='{InputTypes[node.Type]}' " +
+                   $"id='{node.Name}' " +
+                   $"name='{node.Name}' " +
+                   $"value='{node.Value}'" +
+                   $"{Checked(node)}>" +
+                   $"</div>";
+        }
+
+        private static string GetSelect(PropertyNode node)
+        {
+            return $"<div class='editor-field'>" +
+                   $"<select name='{node.Name}'>" +
+                   node
+                       .Type
+                       .GetEnumNames()
+                       .Select(option =>
+                           $"<option value='{option}'{Selected(node, option)}>{option}</option>")
+                       .Aggregate((current, next) => current + next) +
+                   $"</select>" +
+                   $"</div>";
+        }
+
+        private static string Selected(PropertyNode node, string option)
+        {
+            return node.Value.ToString() == option ? " selected" : "";
+        }
+
+        private static string Checked(PropertyNode node)
+        {
+            return node.Type == typeof(bool) &&
+                   (bool) node.Value
+                ? " checked"
+                : "";
         }
     }
 
-    public static class MyClass
+    class PropertyNode
     {
-        public static IHtmlContent MyEditorFor(this IHtmlHelper helper, object obj)
-        {
-            if (obj == null)
-                throw new Exception("Не может быть пустым");
-            //
-            //
-            // visitedTypes.Add(obj.GetType().Name);
-            var properties = obj.GetType().GetProperties();
-            var builder = new HtmlContentBuilder();
-            var dictionary = new Dictionary<PropertyInfo, List<Type>>();
-            var previousTypes = new List<Type>();
-            previousTypes.Add(obj.GetType());
-            var previous = obj.GetType();
-            var isFirst = true;
-            foreach (var property in properties)
-            {
-                dictionary.Add(property, previousTypes);
-                
-                if (property.PropertyType.IsClass && property.PropertyType.Name != "String")
-                {
-                    if (dictionary[property].Contains(property.PropertyType))
-                    {
-                        throw new Exception("Невозможно использовать для вложенных объектов.");
-                    }
-                    
-                    var add = MyEditorFor(helper, property.GetValue(obj));
-                    builder.AppendHtml(add);
-                }
-                else
-                {
-                    var type = property.PropertyType;
-                    builder.AppendHtml(
-                        @$"<div class=""editor-label""><label for=""{property.Name}"">{property.Name}</label></div>");
-                    switch (type.Name)
-                    {
-                        case "Int32":
-                            builder.AppendHtml(GetInt(property, obj));
-                            break;
-                        case "String":
-                            builder.AppendHtml(GetString(property, obj));
-                            break;
-                        case "Int64":
-                            builder.AppendHtml(GetLong(property, obj));
-                            break;
-                        case "Boolean":
-                            builder.AppendHtml(GetBool(property, obj));
-                            break;
-                        default:
-                            if (type.BaseType == typeof(Enum))
-                                builder.AppendHtml(GetString(property, obj));
-                            break;
-                    }
-                }
-            }
+        public string Name { get; }
 
-            return builder;
+        public PropertyNode Parent { get; }
+
+        public object Value { get; }
+
+        public Type Type { get; }
+
+        public PropertyNode(object value, PropertyInfo property = null, PropertyNode parent = null)
+        {
+            Value = value;
+            Type = value.GetType();
+            Name = property?.Name;
+            Parent = parent;
         }
 
-        private static IHtmlContent GetString(PropertyInfo property, object? obj)
+        public void CheckType(Type type)
         {
-            return new HtmlContentBuilder()
-                .AppendHtml(
-                    @$"<div class=""editor-field""><input class=""text-box single-line"" id=""{property.Name}"" name=""{property.Name}"" type=""text"" value=""{property.GetValue(obj).ToString()}""> <span class=""field-validation-valid"" data-valmsg-for=""{property.Name}"" data-valmsg-replace=""true""></span></div>");
-        }
-
-        private static IHtmlContent GetBool(PropertyInfo property, object? obj)
-        {
-            var result = new HtmlContentBuilder();
-            if ((bool) property.GetValue(obj) == true)
-                result.AppendHtml(
-                    @$"<div class=""editor-field""><input checked=""checked"" class=""check-box"" data-val=""true"" data-val-required=""The Bool field is required."" id=""{property.Name}"" name=""{property.Name}""  type=""checkbox"" value=""true""><input name=""{property.Name}"" type=""hidden"" value=""false""> <span class=""field-validation-valid"" data-valmsg-for=""{property.Name}"" data-valmsg-replace=""true""></span></div>");
-            else
-            {
-                result.AppendHtml(
-                    $@"<div class=""editor-field""><input class=""check-box"" data-val=""true"" data-val-required=""The Bool field is required."" id=""{property.Name}"" name=""{property.Name}"" type=""checkbox"" value=""true""><input name=""{property.Name}"" type=""hidden"" value=""false""> <span class=""field-validation-valid"" data-valmsg-for=""{property.Name}"" data-valmsg-replace=""true""></span></div>");
-            }
-
-            return result;
-        }
-
-        private static IHtmlContent GetInt(PropertyInfo property, object obj)
-        {
-            return new HtmlContentBuilder()
-                .AppendHtml(
-                    @$"<div class=""editor-label""><input class=""text-box single-line"" data-val=""true"" data-val-required=""The Int field is required."" id=""{property.Name}"" name=""{property.Name}"" type=""number"" value=""{property.GetValue(obj)}""></div>");
-        }
-
-        private static IHtmlContent GetLong(PropertyInfo property, object obj)
-        {
-            return new HtmlContentBuilder()
-                .AppendHtml(
-                    @$"<div class=""editor-label""><input class=""text-box single-line"" data-val=""true"" data-val-required=""The Int field is required."" id=""{property.Name}"" name=""{property.Name}"" type=""number"" value=""{property.GetValue(obj)}""></div>");
+            if (Type == type)
+                throw new NotSupportedException("Произошло зацикливание");
+            Parent?.CheckType(type);
         }
     }
 }

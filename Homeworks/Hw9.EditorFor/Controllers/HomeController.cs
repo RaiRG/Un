@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Hw9.EditorFor.Models;
+using Enum = Hw9.EditorFor.Models.Enum;
 
 namespace Hw9.EditorFor.Controllers
 {
@@ -20,7 +21,20 @@ namespace Hw9.EditorFor.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var testModel = new TestModel
+            {
+                IntProperty = 1,
+                LongProperty = 2,
+                BoolProperty = true,
+                StringProperty = "Строка",
+                EnumProperty = Enum.Option3,
+                ClassProperty = new NestedClass
+                {
+                    NestedIntProperty = 9,
+                    NestedStringProperty = "Ещё строка"
+                }
+            };
+            return View(testModel);
         }
 
         public IActionResult Privacy()

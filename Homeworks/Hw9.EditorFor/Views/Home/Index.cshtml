@@ -1,8 +1,24 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@using Hw9.EditorFor;
+@model Hw9.EditorFor.Models.TestModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="row">
+        <div class="col">
+            <h2>Default EditorFor:</h2>
+            @Html.EditorForModel()
+        </div>
+        <div class="col">
+            <h2>Custom EditorForModel:</h2>
+            @Html.MyEditorForModel(Model)
+        </div>
+        <div class="col">
+            <h2>Custom EditorFor:</h2>
+            @Html.MyEditorForProperty(Model.EnumProperty)
+        </div>
+    </div>
 </div>
