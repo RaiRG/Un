@@ -29,7 +29,7 @@ namespace Hw6
             VisitExpression(functionBody);
         }
 
-        protected Expression VisitExpression(BinaryExpression binaryExpr)
+        private Expression VisitExpression(BinaryExpression binaryExpr)
         {
             head ??= binaryExpr;
             // Сначала посещаем левую и правую ветку, т.к. только так сможем создать Task.
@@ -39,7 +39,7 @@ namespace Hw6
             return binaryExpr;
         }
 
-        protected Expression VisitExpression(ConstantExpression constantExpression)
+        private Expression VisitExpression(ConstantExpression constantExpression)
         {
             BeforeTasks.Add(constantExpression, CreateTask(constantExpression));
             return constantExpression;
