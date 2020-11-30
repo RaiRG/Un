@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Hw6
 {
-    public class ExpressionTreeVisitor : ExpressionVisitor
+    public class ExpressionTreeVisitor
     {
         private string path = "https://localhost:5001/?expression=";
         private Expression head;
@@ -24,7 +24,12 @@ namespace Hw6
             return result;
         }
 
-        protected override Expression VisitBinary(BinaryExpression binaryExpr)
+        private void Visit(dynamic functionBody)
+        {
+            VisitExpression(functionBody);
+        }
+
+        protected Expression VisitExpression(BinaryExpression binaryExpr)
         {
             head ??= binaryExpr;
             // Сначала посещаем левую и правую ветку, т.к. только так сможем создать Task.
@@ -34,7 +39,7 @@ namespace Hw6
             return binaryExpr;
         }
 
-        protected override Expression VisitConstant(ConstantExpression constantExpression)
+        protected Expression VisitExpression(ConstantExpression constantExpression)
         {
             BeforeTasks.Add(constantExpression, CreateTask(constantExpression));
             return constantExpression;
