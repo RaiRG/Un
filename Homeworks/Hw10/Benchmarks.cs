@@ -57,7 +57,7 @@ namespace Hw10
         {
             this.GetType()
                 .GetMethod("Cycle")
-                .Invoke(new MyClass(), new[] {new MyClass(), });
+                .Invoke(this, new[] {new MyClass(), });
         }
 
         [Benchmark(Description = "SimpleMethod")]
