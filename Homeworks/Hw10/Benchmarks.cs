@@ -6,7 +6,7 @@ namespace Hw10
     {
         public override string ToString()
         {
-            return "string";
+            return "1";
         }
     }
 
@@ -15,9 +15,9 @@ namespace Hw10
         public void Cycle(object arg)
         {
             var currentString = arg.ToString();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 3; i++)
             {
-                currentString += currentString;
+                currentString += "1";
             }
         }
 
@@ -25,20 +25,20 @@ namespace Hw10
         //статические, generic-методы, dynamic, reflection. Что быстрее, на сколько?
         public void SimpleMethod()
         {
-            Cycle("string");
+            Cycle("1");
         }
 
         public virtual void VirtualMethod()
         {
-            Cycle("string");
+            Cycle("1");
         }
 
         public static void StaticMethod()
         {
-            var currentString = "string";
-            for (int i = 0; i < 100; i++)
+            var currentString = "1";
+            for (int i = 0; i < 3; i++)
             {
-                currentString += currentString;
+                currentString += "1";
             }
         }
 
@@ -50,14 +50,14 @@ namespace Hw10
 
         public void DynamicMethod(dynamic dynamicObj)
         {
-            dynamicObj.Cycle("string");
+           Cycle(dynamicObj.ToString());
         }
 
         public void ReflectionMethod()
         {
             this.GetType()
                 .GetMethod("Cycle")
-                .Invoke(new MyClass(), new[] {"string"});
+                .Invoke(new MyClass(), new[] {new MyClass(), });
         }
 
         [Benchmark(Description = "SimpleMethod")]
@@ -87,7 +87,7 @@ namespace Hw10
         [Benchmark(Description = "DynamicMethod")]
         public void InvokeDynamicMethod()
         {
-            DynamicMethod(new MyClass());
+           DynamicMethod(new MyClass());
         }
 
         [Benchmark(Description = "ReflectionMethod")]
