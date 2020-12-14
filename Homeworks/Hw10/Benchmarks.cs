@@ -15,7 +15,7 @@ namespace Hw10
         public void Cycle(object arg)
         {
             var currentString = arg.ToString();
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 currentString += "1";
             }
@@ -36,7 +36,7 @@ namespace Hw10
         public static void StaticMethod()
         {
             var currentString = "1";
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 currentString += "1";
             }
